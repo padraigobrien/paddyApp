@@ -10,6 +10,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
+
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
@@ -49,25 +50,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
+
+    .state('app.session', {
+      url: "/sessions",
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
+          templateUrl: "templates/sessions.html",
+          controller: 'SessionsCtrl'
         }
       }
     })
-
   .state('app.single', {
-    url: '/playlists/:playlistId',
+    url: '/session/:sessionId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/session.html',
+        controller: 'SessionCtrl'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+    $urlRouterProvider.otherwise('/app/sessions');
 });
