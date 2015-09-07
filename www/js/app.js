@@ -4,9 +4,10 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, ngFB) {
+    ngFB.init({appId: '1637677799812553'});
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -51,7 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     })
 
-    .state('app.session', {
+    .state('app.sessions', {
       url: "/sessions",
       views: {
         'menuContent': {
@@ -60,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-  .state('app.single', {
+  .state('app.session', {
     url: '/session/:sessionId',
     views: {
       'menuContent': {
@@ -68,7 +69,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'SessionCtrl'
       }
     }
-  });
+  })
+    .state('app.profile', {
+      url: "/profile",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/profile.html",
+          controller: "ProfileCtrl"
+        }
+      }
+    });
   // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/sessions');
 });

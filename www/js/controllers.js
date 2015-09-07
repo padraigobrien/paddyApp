@@ -1,6 +1,6 @@
-angular.module('starter.controllers', ['starter.services'])
+angular.module('starter.controllers', ['starter.services','ngOpenFB'])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB) {
 
 
   // With the new view caching in Ionic, Controllers are only called
@@ -40,14 +40,56 @@ angular.module('starter.controllers', ['starter.services'])
       $scope.closeLogin();
     }, 1000);
   };
+
+    $scope.fbLogin = function () {
+      ngFB.login({scope: 'email, publish_actions' }).then(
+        function (response) {
+          if (response.status === 'connected') {
+            console.log('Facebook login succeeded');
+            $scope.closeLogin();
+          } else {
+            alert('Facebook login failed');
+          }
+        });
+    };
 })
+
+  .controller('ProfileCtrl', function ($scope, ngFB) {
+    ngFB.api({
+      path: '/me',
+      params: {fields: 'id,name'}
+    }).then(
+      function (user) {
+        $scope.user = user;
+      },
+      function (error) {
+        alert('Facebook error: ' + error.error_description);
+      });
+  })
+
 
 .controller('SessionsCtrl', function($scope, Session) {
-
     $scope.sessions = Session.query()
+
 })
 
-.controller('SessionCtrl', function($scope, $stateParams, Session) {
-    console.log("allo")
+.controller('SessionCtrl', function($scope, $stateParams, Session, ngFB) {
     $scope.session = Session.get({sessionId: $stateParams.sessionId});
+
+    $scope.share = function (event) {
+      ngFB.api({
+        method: 'POST',
+        path: '/me/feed',
+        params: {
+          message: "I'll be attending: '" + $scope.session.title + "' by " +
+          $scope.session.speaker
+        }
+      }).then(
+        function () {
+          alert('The session was shared on Facebook');
+        },
+        function () {
+          alert('An error occurred while sharing this session on Facebook');
+        });
+    };
 });
