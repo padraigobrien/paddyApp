@@ -1,0 +1,19 @@
+<ion-view view-title="Experiences">
+  <ion-content>
+    <div id="viewport">
+      <ul class="stack" swing-stack>
+        <li
+          swing-card
+          swing-on-throwout="throwout(eventName, eventObject)"
+          swing-on-throwoutleft="throwoutleft(eventName, eventObject)"
+          swing-on-throwoutright="throwoutright(eventName, eventObject)"
+          swing-on-throwin="throwin(eventName, eventObject)"
+          swing-on-dragstart="dragstart(eventName, eventObject)"
+          swing-on-dragmove="dragmove(eventName, eventObject)"
+          swing-on-dragend="dragend(eventName, eventObject)"
+          ng-repeat="card in cards" ng-class="card.title">{{card.guide}}</li>
+      </ul>
+
+    </div>
+  </ion-content>
+</ion-view>

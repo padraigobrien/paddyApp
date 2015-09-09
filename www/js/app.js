@@ -43,11 +43,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
+    .state('app.experiences', {
+      url: '/experiences',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/experiences.html',
+          controller: 'ExperienceCtrl'
         }
       }
     })
