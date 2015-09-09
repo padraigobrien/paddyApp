@@ -11,7 +11,14 @@
           swing-on-dragstart="dragstart(eventName, eventObject)"
           swing-on-dragmove="dragmove(eventName, eventObject)"
           swing-on-dragend="dragend(eventName, eventObject)"
-          ng-repeat="card in cards" ng-class="card.title">{{card.guide}}</li>
+          ng-repeat="card in cards" ng-class="card.title">
+
+          <div style="background-image:url(http://paddyapptourpictures.s3-website-eu-west-1.amazonaws.com/{{card.image}}); width:100%;
+  height: 100%; background-repeat:repeat-x;">
+            <!--<img ng-src=" http://paddyapptourpictures.s3-website-eu-west-1.amazonaws.com/{{card.image}}">-->
+
+          </div>
+        </li>
       </ul>
 
     </div>

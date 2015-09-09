@@ -68,32 +68,6 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB','gajus.swin
   })
 
 
-.controller('SessionsCtrl', function($scope, Session) {
-    $scope.sessions = Session.query();
-
-})
-
-.controller('SessionCtrl', function($scope, $stateParams, Session, ngFB) {
-    $scope.session = Session.get({sessionId: $stateParams.sessionId});
-
-    $scope.share = function (event) {
-      ngFB.api({
-        method: 'POST',
-        path: '/me/feed',
-        params: {
-          message: "I'll be attending: '" + $scope.session.title + "' by " +
-          $scope.session.speaker
-        }
-      }).then(
-        function () {
-          alert('The session was shared on Facebook');
-        },
-        function () {
-          alert('An error occurred while sharing this session on Facebook');
-        });
-    };
-})
-
 .controller('ExperienceCtrl', function($scope, Experience){
 
     var stack,
