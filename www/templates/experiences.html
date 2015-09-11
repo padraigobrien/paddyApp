@@ -1,7 +1,7 @@
 <ion-view view-title="Experiences">
   <ion-content>
     <div id="viewport">
-      <ul class="stack" swing-stack>
+      <ul class="stack" swing-stack is-throw-out="isThrowOut(offset, elementWidth)" throw-out-confidence="throwOutConfidence(offset, elementWidth)">
         <li
           swing-card
           swing-on-throwout="throwout(eventName, eventObject)"

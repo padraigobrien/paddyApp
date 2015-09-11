@@ -75,32 +75,45 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB','gajus.swin
 
     $scope.cards= Experience.query();
 
+    $scope.isThrowOut = function (offset, elementWidth) {
+      console.log("Podge")
+      return $scope.throwOutConfidence(offset, elementWidth) == 1;
+    };
+    $scope.throwOutConfidence = function (offset, elementWidth) {
+      console.log(Math.min(Math.abs(offset) / 30, 1));
+      return Math.min(Math.abs(offset) / 30, 1);
+    };
 
     $scope.throwout = function (eventName, eventObject) {
-      console.log('throwout', eventObject);
+     // console.log('throwout', eventObject);
     };
 
     $scope.throwoutleft = function (eventName, eventObject) {
-      console.log('throwoutleft', eventObject);
+    //  console.log('throwoutleft', eventObject);
     };
 
     $scope.throwoutright = function (eventName, eventObject) {
-      console.log('throwoutright', eventObject);
+    //  console.log('throwoutright', eventObject);
     };
 
     $scope.throwin = function (eventName, eventObject) {
-      console.log('throwin', eventObject);
+   //   console.log('throwin', eventObject);
     };
 
     $scope.dragstart = function (eventName, eventObject) {
-      console.log('dragstart', eventObject);
+    //  console.log('dragstart', eventObject);
     };
 
     $scope.dragmove = function (eventName, eventObject) {
-      console.log('dragmove', eventObject);
+    //  console.log('dragmove', eventObject);
+      if(eventObject.throwOutConfidence > 0.2) {
+
+      }
+
     };
 
     $scope.dragend = function (eventName, eventObject) {
-      console.log('dragend', eventObject);
+
+      //console.log('dragend', eventObject);
     };
 });

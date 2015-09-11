@@ -1,8 +1,4 @@
 angular.module('starter.services', ['ngResource'])
-  .factory('Session', function ($resource) {
-    return $resource('http://localhost:5000/sessions/:sessionId');
-  })
-
   .factory('Experience', function($resource){
-    return $resource('http://localhost:5000/experiences')
-  })
+    return $resource('http://ec2-52-18-117-178.eu-west-1.compute.amazonaws.com:5000/experiences')
+  });
