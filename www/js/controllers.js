@@ -1,4 +1,14 @@
-angular.module('starter.controllers', ['starter.services','ngOpenFB','gajus.swing'])
+angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.contrib.ui.tinderCards','ionic','ui.bootstrap.datetimepicker'])
+.directive('noScroll', function() {
+    return {
+      restrict: 'A',
+      link: function($scope, $element, $attr) {
+        $element.on('touchmove', function(e) {
+          e.preventDefault();
+        });
+      }
+    }
+  })
 
 .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB) {
 
@@ -54,7 +64,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB','gajus.swin
     };
 })
 
-  .controller('ProfileCtrl', function ($scope, ngFB) {
+.controller('ProfileCtrl', function ($scope, ngFB) {
     ngFB.api({
       path: '/me',
       params: {fields: 'id,name'}
@@ -67,53 +77,61 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB','gajus.swin
       });
   })
 
+.controller('ExperienceCtrl', function($scope, $state, Experience){
 
-.controller('ExperienceCtrl', function($scope, Experience){
+    $scope.whenthereareresults=false;
 
-    var stack,
-      cards;
-
-    $scope.cards= Experience.query();
-
-    $scope.isThrowOut = function (offset, elementWidth) {
-      console.log("Podge")
-      return $scope.throwOutConfidence(offset, elementWidth) == 1;
-    };
-    $scope.throwOutConfidence = function (offset, elementWidth) {
-      console.log(Math.min(Math.abs(offset) / 30, 1));
-      return Math.min(Math.abs(offset) / 30, 1);
-    };
-
-    $scope.throwout = function (eventName, eventObject) {
-     // console.log('throwout', eventObject);
-    };
-
-    $scope.throwoutleft = function (eventName, eventObject) {
-    //  console.log('throwoutleft', eventObject);
-    };
-
-    $scope.throwoutright = function (eventName, eventObject) {
-    //  console.log('throwoutright', eventObject);
-    };
-
-    $scope.throwin = function (eventName, eventObject) {
-   //   console.log('throwin', eventObject);
-    };
-
-    $scope.dragstart = function (eventName, eventObject) {
-    //  console.log('dragstart', eventObject);
-    };
-
-    $scope.dragmove = function (eventName, eventObject) {
-    //  console.log('dragmove', eventObject);
-      if(eventObject.throwOutConfidence > 0.2) {
-
+    cardTypes = Experience.query(function(cardArray){
+      for(var i = 0; i < cardArray.length; i++) {
+        $scope.addCard(i);
       }
+    });
+    $scope.cards = [];
 
-    };
+    $scope.addCard = function(i) {
+      var newCard = cardTypes[i];
+      $scope.cards.push(angular.extend({}, newCard));
+    }
 
-    $scope.dragend = function (eventName, eventObject) {
+    $scope.cardSwipedLeft = function(index) {
+      console.log('Left swipe');
+    }
 
-      //console.log('dragend', eventObject);
-    };
-});
+    $scope.cardSwipedRight = function(index) {
+      $scope.whenthereareresults=true;
+
+    }
+
+    $scope.cardDestroyed = function(index) {
+      $scope.cards.splice(index, 1);
+    }
+
+    $scope.book = function(cardId) {
+      $state.go('app.booking')
+    }
+})
+
+.controller('BookingCtrl', function($scope, $ionicPopup){
+
+    $scope.booking = {};
+
+    $scope.openDatePicker = function() {
+      $scope.tmp = {};
+      $scope.tmp.newDate = $scope.booking.date;
+
+      var bookingDatePopup = $ionicPopup.show({
+        template: '<datetimepicker ng-model="tmp.newDate" data-datetimepicker-config="{ minView: \'hour\' }"></datetimepicker>',
+        title: "Booking date",
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: '<b>Save</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              $scope.booking.date = $scope.tmp.newDate;
+            }
+          }
+        ]
+      });
+  }});

@@ -21,71 +21,7 @@ button {
 input {
   width: 50px; }
 
-#viewport {
-  width: 320px;
-  height: 600px;
-  margin: 100px auto 0;
-  position: relative; }
 
-#viewport .stack {
-  width: 320px;
-  height: 600px;
-  background: #ED5D52;
-  position: absolute;
-  top: 00px;
-  left: 30%;
-  margin-left: -100px;
-  border-radius: 10px; }
-
-#viewport li {
-  width: 320px;
-  height: 600px;
-  list-style: none;
-  background: #fff;
-  border-radius: 5px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2);
-  line-height: 300px;
-  text-align: center;
-  font-size: 10px;
-  border: 10px solid #ECECEC;
-  box-sizing: border-box;
-  cursor: default; }
-
-
-#viewport li.in-deck:nth-child(3) {
-  top: 2px;
-  transform: translate(2px, 2px) rotate(0.4deg); }
-
-#viewport li.in-deck:nth-child(2) {
-  top: 4px;
-  transform: translate(-4px, -2px) rotate(-1deg); }
-#viewport #control {
-  position: absolute;
-  bottom: 30px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 0; }
-#viewport #control button {
-  background: #FFFFFF;
-  color: #373737;
-  font-weight: bold;
-  border: none;
-  font: normal 18px/24px 'Helvetica Neue', Helvetica, Arial, freesans, sans-serif;
-  margin: 0 5px;
-  padding: 10px 15px;
-  cursor: pointer;
-  box-shadow: 0 2px 0 #63211F;
-  outline: none;
-  position: relative; }
-#viewport #control button:active {
-  background: #63211F;
-  color: #FFFFFF;
-  bottom: -2px;
-  box-shadow: none; }
 
 #source {
   width: 500px;
@@ -94,5 +30,115 @@ input {
   color: #C7433E; }
 
 .has-header {
-  top: 0px;
+  top: 40px;
+}
+
+td-cards {
+  display: block;
+}
+
+td-card {
+  top:45px;
+  position: absolute;
+  left: 0%;
+  /*margin: 80px 0 40px -150px;*/
+  width: 100%;
+  height: 100%;
+  border: 1px solid #999;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  background-color: rgb(255,255,255);
+}
+
+.td-card .title {
+  height: 40px;
+  font-size: 15px;
+  padding: 15px;
+}
+
+td-card .image {
+  position: absolute;
+  top: 00px;
+  width: 100%;
+}
+
+td-card img {
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+}
+
+/* Overlay styling*/
+
+.overlayBox {
+  position: absolute;
+  left: 50%;
+  height: 98%;
+  width: 100%;
+  top: -80px;
+  opacity: 0;
+  margin: 80px 0 0 -149px;
+}
+
+.boxed {
+  height: 50px;
+  height: 50px;
+  width: 100px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 30px;
+}
+
+.yes-text {
+  background-color: rgba(0,256,0,0.2);
+}
+
+.yesBox {
+  margin: 10% 60% 0% 10%;
+  border: 2px solid #00FF00;
+  color: rgb(0, 256, 0);
+  -webkit-transform: rotate(-25deg);
+}
+
+.no-text {
+  background-color: rgba(256,0,0,0.2);
+}
+
+.noBox {
+  margin: 10% 10% 0% 60%;
+  border: 2px solid #FF0000;
+  color: rgb(256, 0, 0);
+  -webkit-transform: rotate(25deg);
+}
+
+.fade {
+  -webkit-transition: 0.2s opacity linear;
+  transition: 0.2s opacity linear;
+  opacity: 0;
+}
+
+.transparent-dark {
+  background:#7f7f7f;
+  background:rgba(255,255,255,0.5);
+}
+
+.transparent-nothing {
+  background:#7f7f7f;
+  background:rgba(0,0,0,0);
+}
+
+.transparent-dark p {
+  color: black;
+}
+
+.transparent-drark h2 {
+  color: black;
+}
+
+
+.popup-body .datetimepicker {
+  min-height: 221px;
+}
+.popup-body .datetimepicker table {
+  width: 100%;
 }

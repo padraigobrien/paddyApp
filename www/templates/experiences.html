@@ -1,26 +1,45 @@
 <ion-view view-title="Experiences">
   <ion-content>
-    <div id="viewport">
-      <ul class="stack" swing-stack is-throw-out="isThrowOut(offset, elementWidth)" throw-out-confidence="throwOutConfidence(offset, elementWidth)">
-        <li
-          swing-card
-          swing-on-throwout="throwout(eventName, eventObject)"
-          swing-on-throwoutleft="throwoutleft(eventName, eventObject)"
-          swing-on-throwoutright="throwoutright(eventName, eventObject)"
-          swing-on-throwin="throwin(eventName, eventObject)"
-          swing-on-dragstart="dragstart(eventName, eventObject)"
-          swing-on-dragmove="dragmove(eventName, eventObject)"
-          swing-on-dragend="dragend(eventName, eventObject)"
-          ng-repeat="card in cards" ng-class="card.title">
-
-          <div style="background-image:url(http://paddyapptourpictures.s3-website-eu-west-1.amazonaws.com/{{card.image}}); width:100%;
-  height: 100%; background-repeat:repeat-x;">
-            <!--<img ng-src=" http://paddyapptourpictures.s3-website-eu-west-1.amazonaws.com/{{card.image}}">-->
+    <div>
+    <td-cards>
+        <td-card id="td-card" ng-repeat="card in cards" on-destroy="cardDestroyed($index)"
+                 on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)"
+                 on-partial-swipe="cardPartialSwipe(amt)">
+          <div class="title">
+            {{card.title}}
+          </div>
+          <div class="item item-avatar transparent-dark">
+            <img src="http://graph.facebook.com/{{guide.id}}/picture?width=270&height=270"/>
+            <h2>{{card.guide}}</h2>
+            <p>Duration: {{card.duration}} mins</p>
+          </div>
+          <div class="item item-body transparent-nothing">
 
           </div>
-        </li>
-      </ul>
+          <div class="item item-body transparent-dark">
+            <h2>{{card.title}}</h2>
+            <p>{{card.description}}</p>
+          </div>
+          <div class="image">
+            <div class="no-text overlayBox"><div class="noBox boxed">Trash</div></div>
+            <img ng-src="http://paddyapptourpictures.s3-website-eu-west-1.amazonaws.com/{{card.image}}">
+            <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Save</div></div>
+          </div>
+          <div class="item item-body transparent-nothing">
 
+          </div>
+          <div>
+            <button class="button button-full button-positive" ng-click="book({{card.id}})">
+              Book now
+            </button>
+          </div>
+        </td-card>
+      </td-cards>
+    </div>
+    <div id="viewResults" ng-show="whenthereareresults">
+      <button class="button button-full button-outline button-positive">
+        View your results
+      </button>
     </div>
   </ion-content>
 </ion-view>

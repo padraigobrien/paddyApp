@@ -41,6 +41,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB'])
         }
       }
     })
+    .state('app.booking', {
+      url: '/booking',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/booking.html',
+          controller: 'BookingCtrl'
+        }
+      }
+    })
     .state('app.profile', {
       url: "/profile",
       views: {
