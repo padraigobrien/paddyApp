@@ -111,7 +111,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
     }
 })
 
-.controller('BookingCtrl', function($scope, $ionicPopup){
+.controller('BookingCtrl', function($scope, $ionicPopup,$filter){
 
     $scope.booking = {};
 
@@ -119,8 +119,11 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       $scope.tmp = {};
       $scope.tmp.newDate = $scope.booking.date;
 
+
+
+
       var bookingDatePopup = $ionicPopup.show({
-        template: '<datetimepicker ng-model="tmp.newDate" data-datetimepicker-config="{ minView: \'hour\' }"></datetimepicker>',
+        template: '<datetimepicker data-ng-model="data.date" data-before-render="beforeRender($view, $dates, $leftDate, $upDate, $rightDate)" data-on-set-time="onTimeSet(newDate)" data-datetimepicker-config="{ minView: \'hour\' }"></datetimepicker>',
         title: "Booking date",
         scope: $scope,
         buttons: [
@@ -134,4 +137,16 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
           }
         ]
       });
+
+      $scope.beforeRender = function ($view, $dates, $leftDate, $upDate, $rightDate) {
+        //var index = Math.floor(Math.random() * $dates.length);
+        //$dates[index].selectable = false;
+        console.log("Podge be like whhhaaaa");
+      }
+
+      $scope.onTimeSet = function (newDate) {
+        console.log(newDate);
+        $scope.booking.date =$filter('date')(newDate, 'MMM dd yyyy HH:mm');
+        bookingDatePopup.close();
+      }
   }});
