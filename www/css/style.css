@@ -22,7 +22,6 @@ input {
   width: 50px; }
 
 
-
 #source {
   width: 500px;
   margin: 20px auto; }
@@ -43,7 +42,9 @@ td-card {
   left: 0%;
   /*margin: 80px 0 40px -150px;*/
   width: 100%;
+  max-width: 500px;
   height: 100%;
+  max-height: 600px;
   border: 1px solid #999;
   box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
   border-radius: 6px;
@@ -57,7 +58,7 @@ td-card {
 }
 
 td-card .image {
-  position: absolute;
+height:275px;
   top: 00px;
   width: 100%;
 }
@@ -72,7 +73,7 @@ td-card img {
 
 .overlayBox {
   position: absolute;
-  left: 50%;
+  left: 25%;
   height: 98%;
   width: 100%;
   top: -80px;

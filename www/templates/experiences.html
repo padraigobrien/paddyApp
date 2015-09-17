@@ -5,32 +5,23 @@
         <td-card id="td-card" ng-repeat="card in cards" on-destroy="cardDestroyed($index)"
                  on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)"
                  on-partial-swipe="cardPartialSwipe(amt)">
-          <div class="title">
-            {{card.title}}
+          <div class="no-text overlayBox"><div class="noBox boxed">Trash</div></div>
+          <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Save</div></div>
+          <div class="image">
+            <img ng-src="http://paddyapptourpictures.s3-website-eu-west-1.amazonaws.com/{{card.image}}">
           </div>
-          <div class="item item-avatar transparent-dark">
-            <img src="http://graph.facebook.com/{{guide.id}}/picture?width=270&height=270"/>
+          <div class="item item-avatar">
+            <img src="http://graph.facebook.com/{{card.guideId}}/picture?width=270&height=270"/>
             <h2>{{card.guide}}</h2>
             <p>Duration: {{card.duration}} mins</p>
           </div>
-          <div class="item item-body transparent-nothing">
-
-          </div>
-          <div class="item item-body transparent-dark">
+          <div class="item item-body">
             <h2>{{card.title}}</h2>
-            <p>{{card.description}}</p>
-          </div>
-          <div class="image">
-            <div class="no-text overlayBox"><div class="noBox boxed">Trash</div></div>
-            <img ng-src="http://paddyapptourpictures.s3-website-eu-west-1.amazonaws.com/{{card.image}}">
-            <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Save</div></div>
-          </div>
-          <div class="item item-body transparent-nothing">
-
+            <p>{{card.description | limitTo:150  }}</p>
           </div>
           <div>
             <button class="button button-full button-positive" ng-click="book({{card.id}})">
-              Book now
+              Book now for {{ card.price}}
             </button>
           </div>
         </td-card>
@@ -38,7 +29,12 @@
     </div>
     <div id="viewResults" ng-show="whenthereareresults">
       <button class="button button-full button-outline button-positive">
-        View your results
+        View your favourites
+      </button>
+    </div>
+    <div id="viewResults" ng-hide="whenthereareresults">
+      <button class="button button-full button-outline button-positive">
+        Swipe left to discard, right to save
       </button>
     </div>
   </ion-content>
