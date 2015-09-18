@@ -4,7 +4,7 @@
     <td-cards>
         <td-card id="td-card" ng-repeat="card in cards" on-destroy="cardDestroyed($index)"
                  on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)"
-                 on-partial-swipe="cardPartialSwipe(amt)">
+                 on-partial-swipe="cardPartialSwipe(amt)" on>
           <div class="no-text overlayBox"><div class="noBox boxed">Trash</div></div>
           <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Save</div></div>
           <div class="image">
@@ -20,7 +20,7 @@
             <p>{{card.description | limitTo:150  }}</p>
           </div>
           <div>
-            <button class="button button-full button-positive" ng-click="book({{card.id}})">
+            <button class="button button-full button-positive" ng-click="book(card.id,card.guide,card.title,0811111111)">
               Book now for {{ card.price}}
             </button>
           </div>

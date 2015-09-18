@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.contrib.ui.tinderCards','ionic','ui.bootstrap.datetimepicker'])
+angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.contrib.ui.tinderCards','ionic','ui.bootstrap.datetimepicker','angularPayments'])
 .directive('noScroll', function() {
     return {
       restrict: 'A',
@@ -77,7 +77,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       });
   })
 
-.controller('ExperienceCtrl', function($scope, $state, Experience){
+.controller('ExperienceCtrl', function($scope, $state, Experience, Booking){
 
     $scope.whenthereareresults=false;
 
@@ -106,24 +106,33 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       $scope.cards.splice(index, 1);
     }
 
-    $scope.book = function(cardId) {
-      $state.go('app.booking')
+    $scope.book = function(cardId,GuideName,Title,mobileNumber) {
+      Booking.setBookingId(cardId);
+      Booking.setGuideName(GuideName);
+      Booking.setTitle(Title);
+      Booking.setMobileNunmber(mobileNumber);
+
+      console.log("Podge pre " + Booking.getGuideName());
+      $state.go('app.booking');
     }
 })
 
-.controller('BookingCtrl', function($scope, $ionicPopup,$filter){
+.controller('BookingCtrl', function($scope, $ionicPopup,$filter,Experience,Booking){
 
-    $scope.booking = {};
+    //$scope.booking = {};
+
+    console.log("Podge post " + Booking.getGuideName());
+    $scope.name = Booking.getGuideName();
+    $scope.title = Booking.getTitle();
+    $scope.mobileNumber = Booking.getMobileNumber();
 
     $scope.openDatePicker = function() {
       $scope.tmp = {};
-      $scope.tmp.newDate = $scope.booking.date;
-
-
+      $scope.tmp.newDate = $scope.date;
 
 
       var bookingDatePopup = $ionicPopup.show({
-        template: '<datetimepicker data-ng-model="data.date" data-before-render="beforeRender($view, $dates, $leftDate, $upDate, $rightDate)" data-on-set-time="onTimeSet(newDate)" data-datetimepicker-config="{ minView: \'hour\' }"></datetimepicker>',
+        template: '<datetimepicker data-ng-model="date" data-before-render="beforeRender($view, $dates, $leftDate, $upDate, $rightDate)" data-on-set-time="onTimeSet(newDate)" data-datetimepicker-config="{ minView: \'hour\' }"></datetimepicker>',
         title: "Booking date",
         scope: $scope,
         buttons: [
@@ -132,21 +141,29 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
             text: '<b>Save</b>',
             type: 'button-positive',
             onTap: function(e) {
-              $scope.booking.date = $scope.tmp.newDate;
+              $scope.date = $scope.tmp.newDate;
             }
           }
         ]
       });
 
       $scope.beforeRender = function ($view, $dates, $leftDate, $upDate, $rightDate) {
-        //var index = Math.floor(Math.random() * $dates.length);
-        //$dates[index].selectable = false;
+        var index = Math.floor(Math.random() * $dates.length);
+        console.log($dates.length);
+        $dates[index].selectable = false;
         console.log("Podge be like whhhaaaa");
       }
 
       $scope.onTimeSet = function (newDate) {
-        console.log(newDate);
-        $scope.booking.date =$filter('date')(newDate, 'MMM dd yyyy HH:mm');
+        $scope.date =$filter('date')(newDate, 'MMM dd yyyy HH:mm');
         bookingDatePopup.close();
       }
+
+      $scope.stripeCallback = function (code, result) {
+        if (result.error) {
+          window.alert('it failed! error: ' + result.error.message);
+        } else {
+          window.alert('success! token: ' + result.id);
+        }
+      };
   }});

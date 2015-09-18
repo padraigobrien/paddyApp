@@ -25,6 +25,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB'])
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
+
+  window.Stripe.setPublishableKey('pk_test_HPEKBl7nQOepDTNYKb2YHPxW');
+
   $stateProvider
     .state('app', {
     url: '/app',

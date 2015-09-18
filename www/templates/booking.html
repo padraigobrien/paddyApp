@@ -1,8 +1,37 @@
-<ion-view view-title="booking">
+<ion-view view-title="Confirm Booking">
   <ion-content>
+    <form stripe-form="stripeCallback">
     <label class="item item-input" ng-click="openDatePicker()">
       <span class="input-label">Choose date</span>
-      <input type="text" data-ng-model="booking.date">
+      <input type="text" data-ng-model="date" placeholder="Date">
     </label>
+    <label class="item item-input">
+      <span class="input-label">Guide Name</span>
+      <input type="text" value="{{name}}" disabled >
+    </label>
+    <label class="item item-input">
+      <span class="input-label">Experience Title</span>
+      <input type="text" value="{{title}}" disabled>
+    </label>
+    <label class="item item-input">
+      <span class="input-label">Guide Contact number</span>
+      <input type="text" value="{{mobileNumber}}" disabled>
+    </label>
+      <label class="item item-input">
+        <span class="input-label">Credit card number</span>
+        <input ng-model="number" placeholder="Card Number" />
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Expiration</span>
+        <input ng-model="expiry" placeholder="Expiration" />
+      </label>
+      <label class="item item-input">
+        <span class="input-label">CVC</span>
+         <input ng-model="cvc" placeholder="CVC" />
+      </label>
+      <label class="item item-input">
+         <button class="button button-positive" type="submit">Book me in</button>
+      </label>
+      </form>
   </ion-content>
 </ion-view>
