@@ -61,6 +61,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB'])
           controller: "ProfileCtrl"
         }
       }
+    })
+    .state('app.myexperiences', {
+      url: "/myexperiences",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/myexperiences.html",
+          controller: "MyExperiencesCtrl"
+        }
+      }
     });
   // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/experiences');

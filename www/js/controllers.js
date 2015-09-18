@@ -119,9 +119,6 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
 
 .controller('BookingCtrl', function($scope, $ionicPopup,$filter,Experience,Booking){
 
-    //$scope.booking = {};
-
-    console.log("Podge post " + Booking.getGuideName());
     $scope.name = Booking.getGuideName();
     $scope.title = Booking.getTitle();
     $scope.mobileNumber = Booking.getMobileNumber();
@@ -160,10 +157,12 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       }
 
       $scope.stripeCallback = function (code, result) {
+        console.log("allo");
         if (result.error) {
           window.alert('it failed! error: ' + result.error.message);
         } else {
-          window.alert('success! token: ' + result.id);
+         window.alert('success! token: ' + result.id);
+        //  $state.go('app.success');
         }
       };
   }});
