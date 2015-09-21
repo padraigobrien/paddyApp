@@ -9,6 +9,7 @@ angular.module('starter.services', ['ngResource'])
     var guideName ="";
     var title="";
     var mobileNumber="";
+    var price=0;
 
     return {
       getBookingId: function () {
@@ -30,11 +31,16 @@ angular.module('starter.services', ['ngResource'])
         title = value;
       },
       getMobileNumber: function() {
-      return mobileNumber;
+        return mobileNumber;
       },
       setMobileNunmber: function(value) {
         mobileNumber = value;
+      },
+      getPrice: function() {
+        return price;
+      },
+      setPrice: function(value) {
+        price = value;
       }
-
     };
   })

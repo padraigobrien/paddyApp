@@ -62,7 +62,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB'])
         }
       }
     })
-    .state('app.myexperiences', {
+    .state('app.myExperiences', {
       url: "/myexperiences",
       views: {
         'menuContent': {
