@@ -5,6 +5,7 @@ angular.module('starter.services', ['ngResource'])
     )
   })
   .service('Booking', function () {
+    var facebookId=0;
     var BookingId = 0;
     var guideName ="";
     var title="";
@@ -12,6 +13,12 @@ angular.module('starter.services', ['ngResource'])
     var price=0;
 
     return {
+      getFacebookId: function () {
+        return facebookId;
+      },
+      setFacebookId: function(value) {
+        facebookId = value;
+      },
       getBookingId: function () {
         return BookingId;
       },
@@ -44,3 +51,4 @@ angular.module('starter.services', ['ngResource'])
       }
     };
   })
+

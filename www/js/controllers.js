@@ -107,6 +107,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
     }
 
     $scope.book = function(cardId,GuideName,Title,mobileNumber,price) {
+
       Booking.setBookingId(cardId);
       Booking.setGuideName(GuideName);
       Booking.setTitle(Title);
@@ -116,12 +117,14 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
     }
 })
 
-.controller('BookingCtrl', function($scope, $ionicPopup, $filter, $state, Experience,Booking){
+.controller('BookingCtrl', function($scope, $ionicPopup, $filter, $state, $http, Experience,Booking){
 
     $scope.name = Booking.getGuideName();
     $scope.title = Booking.getTitle();
     $scope.mobileNumber = Booking.getMobileNumber();
     $scope.price = Booking.getPrice();
+    $scope.experienceID = Booking.getBookingId();
+
     $scope.openDatePicker = function() {
 
       $scope.tmp = {};
@@ -146,7 +149,6 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
 
       $scope.beforeRender = function ($view, $dates, $leftDate, $upDate, $rightDate) {
         var index = Math.floor(Math.random() * $dates.length);
-        console.log($dates.length);
         $dates[index].selectable = false;
       }
 
@@ -160,6 +162,27 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
           console.log('it failed! error: ' + result.error.message);
         } else {
          console.log('success! token: ' + result.id);
+
+          var req = {
+            method: "PUT",
+            url: "http://localhost:8080/bookings",
+            headers: {
+              'Content-Type': "application/json"
+            },
+              data: JSON.stringify({
+                  myUserId : "54321",
+                  experienceDate: $scope.date,
+                  guideName: $scope.name,
+                  guideContactNumber:$scope.mobileNumber.toString(),
+                  experienceTitle:$scope.title,
+                  experiencePrice:$scope.price,
+                  experienceID: $scope.experienceID.toString()
+                })
+          };
+
+          $http(req).then(function(response){
+            console.log(response.status);
+          });
           $state.go('app.myExperiences');
         }
       };
