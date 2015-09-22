@@ -118,7 +118,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
     }
 })
 
-.controller('BookingCtrl', function($scope, $ionicPopup, $filter, $state, $http, Experience,Booking){
+.controller('BookingCtrl', function($scope, $ionicPopup, $filter, $state, $http, $ionicLoading, Experience,Booking){
 
     $scope.name = Booking.getGuideName();
     $scope.title = Booking.getTitle();
@@ -160,9 +160,17 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       }
 
       $scope.stripeCallback = function (code, result) {
+
         if (result.error) {
           console.log('it failed! error: ' + result.error.message);
         } else {
+          $ionicLoading.show({
+            content: 'Loading',
+            animation: 'fade-in',
+            showBackdrop: true,
+            maxWidth: 200,
+            showDelay: 0
+          });
          console.log('success! token: ' + result.id);
           var req = {
             method: "PUT",
@@ -181,10 +189,10 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
                   image: $scope.image
                 })
           };
-
           $http(req).then(function(response){
             console.log(response.status);
           });
+          $ionicLoading.hide();
           $state.go('app.myExperiences');
         }
       };
