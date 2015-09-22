@@ -166,7 +166,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
          console.log('success! token: ' + result.id);
           var req = {
             method: "PUT",
-            url: "http://localhost:8080/bookings",
+            url: "http://ec2-52-18-117-178.eu-west-1.compute.amazonaws.com:8080/bookings",
             headers: {
               'Content-Type': "application/json"
             },
