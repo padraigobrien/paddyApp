@@ -4,13 +4,14 @@ angular.module('starter.services', ['ngResource'])
       {id: "@id" }
     )
   })
-  .service('Booking', function () {
+ .service('Booking', function () {
     var facebookId=0;
     var BookingId = 0;
     var guideName ="";
     var title="";
     var mobileNumber="";
     var price=0;
+    var image="";
 
     return {
       getFacebookId: function () {
@@ -48,7 +49,18 @@ angular.module('starter.services', ['ngResource'])
       },
       setPrice: function(value) {
         price = value;
+      },
+      getImage: function() {
+        return image;
+      },
+      setImage: function(value) {
+        image = value;
       }
     };
+  })
+ .factory('myBookings', function($resource){
+    return $resource('http://localhost:8080/bookings/:userId',
+      {userID : "@userID"}
+    )
   })
 
