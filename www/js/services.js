@@ -1,8 +1,10 @@
 angular.module('starter.services', ['ngResource'])
   .factory('Experience', function($resource){
-    return $resource('http://ec2-52-18-117-178.eu-west-1.compute.amazonaws.com:8080/experiences/:id',
-      {id: "@id" }
-    )
+    retrieve : function() {
+      return $resource('http://ec2-52-18-117-178.eu-west-1.compute.amazonaws.com:8080/experiences/:id',
+        {id: "@id"}
+      )
+    }
   })
  .service('Booking', function () {
     var facebookId=0;

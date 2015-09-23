@@ -28,6 +28,18 @@
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
+    <script>
+      function loadApp() {
+        // see http://stackoverflow.com/questions/23662121/cordova-plugins-only-work-in-ios-the-second-time-its-opened-with-a-thread-warnin
+        cordova.exec.setJsToNativeBridgeMode(cordova.exec.jsToNativeModes.XHR_NO_PAYLOAD);
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'main.js';
+        head.appendChild(script);
+      }
+      document.addEventListener("deviceready", loadApp, false);
+    </script>
 
     <!-- your app's js -->
     <!--<script src="js/angular-swing.min.js"></script>-->

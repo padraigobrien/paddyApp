@@ -66,7 +66,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngOpenFB'])
       url: "/myexperiences",
       views: {
         'menuContent': {
-          templateUrl: "templates/myexperiences.html",
+          templateUrl: "templates/myExperiences.html",
           controller: "MyExperiencesCtrl"
         }
       }

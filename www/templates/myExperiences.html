@@ -5,8 +5,9 @@
 </ion-header-bar>
 
 <ion-content>
-
-  <div class="list">
+  <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
+  </ion-refresher>
+  <ion-list>
     <a ng-repeat="item in items"
        href="#/{{item.experienceID}}"
        class="item item-thumbnail-left">
@@ -16,7 +17,7 @@
       <h4>{{ item.guideName }}</h4>
     </a>
 
-  </div>
+  </ion-list>
 
 </ion-content>
   </ion-view>

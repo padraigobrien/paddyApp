@@ -213,4 +213,11 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       $scope.items.push(angular.extend({}, newCard));
     }
 
+    $scope.doRefresh = function() {
+
+      $scope.$broadcast('scroll.refreshComplete');
+      $scope.$apply()
+    };
+
+
   });
