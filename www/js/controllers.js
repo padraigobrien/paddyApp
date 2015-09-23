@@ -9,7 +9,32 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       }
     }
   })
+.controller('LoginCtrl', function($scope, $state, $ionicModal,$timeout,ngFB, Profile){
+    $scope.fbLogin = function () {
+      ngFB.login({scope: 'email, publish_actions' }).then(
+        function (response) {
+          if (response.status === 'connected') {
+            console.log('Facebook login succeeded');
+            getInfo();
+            $state.go('app.experiences');
+          } else {
+            alert('Facebook login failed');
+          }
+        });
+    };
 
+    getInfo = function() {
+      ngFB.api({path: '/me'}).then(
+        function(user) {
+          Profile.setFacebookId(user.id);
+        },
+        errorHandler);
+    }
+
+    function errorHandler(error) {
+      console.log(error.message);
+    }
+})
 .controller('AppCtrl', function ($scope, $ionicModal, $timeout, ngFB) {
 
 
@@ -21,47 +46,47 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
   //});
 
   // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-
-    $scope.fbLogin = function () {
-      ngFB.login({scope: 'email, publish_actions' }).then(
-        function (response) {
-          if (response.status === 'connected') {
-            console.log('Facebook login succeeded');
-            $scope.closeLogin();
-          } else {
-            alert('Facebook login failed');
-          }
-        });
-    };
+  //$scope.loginData = {};
+  //
+  //// Create the login modal that we will use later
+  //$ionicModal.fromTemplateUrl('templates/login.html', {
+  //  scope: $scope
+  //}).then(function(modal) {
+  //  $scope.modal = modal;
+  //});
+  //
+  //// Triggered in the login modal to close it
+  //$scope.closeLogin = function() {
+  //  $scope.modal.hide();
+  //};
+  //
+  //// Open the login modal
+  //$scope.login = function() {
+  //  $scope.modal.show();
+  //};
+  //
+  //// Perform the login action when the user submits the login form
+  //$scope.doLogin = function() {
+  //  console.log('Doing login', $scope.loginData);
+  //
+  //  // Simulate a login delay. Remove this and replace with your login
+  //  // code if using a login system
+  //  $timeout(function() {
+  //    $scope.closeLogin();
+  //  }, 1000);
+  //};
+  //
+  //  $scope.fbLogin = function () {
+  //    ngFB.login({scope: 'email, publish_actions' }).then(
+  //      function (response) {
+  //        if (response.status === 'connected') {
+  //          console.log('Facebook login succeeded');
+  //          $scope.closeLogin();
+  //        } else {
+  //          alert('Facebook login failed');
+  //        }
+  //      });
+  //  };
 })
 
 .controller('ProfileCtrl', function ($scope, ngFB) {
@@ -77,11 +102,11 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       });
   })
 
-.controller('ExperienceCtrl', function($scope, $state, Experience, Booking){
+.controller('ExperienceCtrl', function($scope, $state, Experiences, Booking){
 
     $scope.whenthereareresults=false;
 
-    cardTypes = Experience.query(function(cardArray){
+    cardTypes = Experiences.query(function(cardArray){
       for(var i = 0; i < cardArray.length; i++) {
         $scope.addCard(i);
       }
@@ -118,7 +143,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
     }
 })
 
-.controller('BookingCtrl', function($scope, $ionicPopup, $filter, $state, $http, $ionicLoading, Experience,Booking){
+.controller('BookingCtrl', function($scope, $ionicPopup, $filter, $state, $http, $ionicLoading, Experiences,Booking){
 
     $scope.name = Booking.getGuideName();
     $scope.title = Booking.getTitle();
@@ -193,14 +218,16 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
             console.log(response.status);
           });
           $ionicLoading.hide();
+
           $state.go('app.myExperiences');
         }
       };
   }})
 
-.controller('MyExperiencesCtrl', function($scope, $state, myBookings) {
+.controller('MyExperiencesCtrl', function($scope, $state, Bookings, Profile) {
 
-    cardTypes = myBookings.query({},{'UserID': "10153023161040925"},
+    UserID = Profile.getFacebookId();
+    cardTypes = Bookings.query({},{'UserID': UserID},
     function(cardArray){
       for(var i = 0; i < cardArray.length; i++) {
         $scope.addCard(i);
