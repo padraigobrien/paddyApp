@@ -64,13 +64,20 @@ angular.module('starter.services', ['ngResource'])
   };
 })
 .service('Profile', function(){
-  var facebookID="";
+  var Id="";
+  var name=""
     return {
       getFacebookId: function () {
-        return facebookId;
+        return Id;
       },
       setFacebookId: function (value) {
-        facebookId = value;
+        Id = value;
+      },
+      getFacebookName: function () {
+        return name;
+      },
+      setFacebookName: function (value) {
+        name = value;
       }
     }
 })
