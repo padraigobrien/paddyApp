@@ -1,25 +1,25 @@
 <ion-view view-title="Confirm Booking">
   <ion-content>
-    <form stripe-form="stripeCallback">
-    <label class="item item-input" ng-click="openDatePicker()">
-      <span class="input-label">Choose date</span>
-      <input type="text" data-ng-model="date" placeholder="Date">
-    </label>
-    <label class="item item-input">
-      <span class="input-label">Guide Name</span>
-      <input type="text" value="{{name}}" disabled >
-    </label>
-    <label class="item item-input">
-      <span class="input-label">Experience Title</span>
-      <input type="text" value="{{title}}" disabled>
-    </label>
-    <label class="item item-input">
-      <span class="input-label">Guide Contact number</span>
-      <input type="text" value="{{mobileNumber}}" disabled>
-    </label>
+    <form name="bookingForm" stripe-form="stripeCallback">
+      <label class="item item-input" ng-click="openDatePicker()">
+        <span class="input-label">Choose date</span>
+        <input type="text" ng-model="date" placeholder="Date">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Guide Name</span>
+        <input type="text" value="{{name}}" disabled>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Experience Title</span>
+        <input type="text" value="{{title}}" disabled>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Guide Contact number</span>
+        <input type="text" value="{{mobileNumber}}" disabled>
+      </label>
       <label class="item item-input">
         <span class="input-label">Credit card number</span>
-        <input ng-model="number" payments-format="card" placeholder="Card Number" payments-validate="card"/>
+        <input ng-model="number" payments-format="card" placeholder="Card Number" name="ccnumber"/>
       </label>
       <label class="item item-input">
         <span class="input-label">Expiration</span>
@@ -27,11 +27,15 @@
       </label>
       <label class="item item-input">
         <span class="input-label">CVC</span>
-         <input ng-model="cvc" placeholder="CVC" payments-format="cvc" />
+        <input ng-model="cvc" placeholder="CVC" payments-format="cvc"/>
       </label>
+      <div class="alert alert-danger alert-dismissible" role="alert" ng-show="message.length>0">
+        <button type="button" class="close" data-dismiss="alert" ></button>
+        <strong>Invalid: </strong>{{message}}
+      </div>
       <label class="item item-input">
-         <button class="button button-positive" type="submit">Book me in for {{price}}</button>
+        <button class="button button-positive" type="submit">Book me in for {{price}}</button>
       </label>
-      </form>
+    </form>
   </ion-content>
 </ion-view>

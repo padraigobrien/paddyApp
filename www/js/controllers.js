@@ -95,6 +95,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
     $scope.price = Booking.getPrice();
     $scope.experienceID = Booking.getBookingId();
     $scope.image = Booking.getImage();
+    $scope.message = "";
 
     $scope.openDatePicker = function() {
 
@@ -129,43 +130,53 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       }
 
       $scope.stripeCallback = function (code, result) {
+        var timestamp=Date.parse($scope.date);
+        var datelength=0;
+        datelength = $scope.date.length;
 
-        if (result.error) {
-          console.log('it failed! error: ' + result.error.message);
-        } else {
-          $ionicLoading.show({
-            content: 'Loading',
-            animation: 'fade-in',
-            showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
-          });
-         console.log('success! token: ' + result.id);
-          var req = {
-            method: "PUT",
-            url: "http://ec2-52-18-117-178.eu-west-1.compute.amazonaws.com:8080/bookings",
-            headers: {
-              'Content-Type': "application/json"
-            },
+        if (isNaN(timestamp)===false) {
+          if (result.error) {
+            $scope.message = 'Payment failed! error: ' + result.error.message;
+            console.log('Payment failed! error: ' + result.error.message)
+          } else {
+            $ionicLoading.show({
+              content: 'Loading',
+              animation: 'fade-in',
+              showBackdrop: true,
+              maxWidth: 200,
+              showDelay: 0
+            });
+            console.log('success! token: ' + result.id);
+            var req = {
+              method: "PUT",
+              url: "http://ec2-52-18-117-178.eu-west-1.compute.amazonaws.com:8080/bookings",
+              headers: {
+                'Content-Type': "application/json"
+              },
               data: JSON.stringify({
-                  myUserId : "10153023161040925",
-                  experienceDate: $scope.date,
-                  guideName: $scope.name,
-                  guideContactNumber:$scope.mobileNumber.toString(),
-                  experienceTitle:$scope.title,
-                  experiencePrice:$scope.price,
-                  experienceID:  Number(new Date()),
-                  image: $scope.image
-                })
-          };
-          $http(req).then(function(response){
-            console.log(response.status);
-          });
-          $ionicLoading.hide();
-
-          $state.go('app.myExperiences');
+                myUserId: "10153023161040925",
+                experienceDate: $scope.date,
+                guideName: $scope.name,
+                guideContactNumber: $scope.mobileNumber.toString(),
+                experienceTitle: $scope.title,
+                experiencePrice: $scope.price,
+                experienceID: Number(new Date()),
+                image: $scope.image
+              })
+            };
+            $http(req).then(function (response) {
+              $scope.message = response.status;
+              console.log(response.status)
+            });
+            $ionicLoading.hide();
+            $state.go('app.myExperiences');
+          }
         }
-      };
+        else {
+          $scope.message = "Date does not look like it was filled in";
+        }
+        ;
+      }
   }})
 
 .controller('MyExperiencesCtrl', function($scope, $state, Bookings, Profile) {
