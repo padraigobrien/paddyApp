@@ -5,9 +5,9 @@ angular.module('starter.services', ['ngResource'])
   )
 })
 .factory('Bookings', function($resource){
-    return $resource('http://localhost:8080/bookings/:userId',
-      {userID : "@userID"}
-    )
+    return $resource('http://localhost:8080/bookings/:UserID', {
+      UserID : '@UserID'
+    });
   })
 .service('Booking', function () {
   var facebookId=0;

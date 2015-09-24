@@ -29,6 +29,7 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
           console.log(JSON.stringify(user));
           Profile.setFacebookId(user.id);
           Profile.setFacebookName(user.name);
+          console.log("set facebookid:" + Profile.getFacebookId())
         },
         errorHandler);
     }
@@ -180,26 +181,30 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
   }})
 
 .controller('MyExperiencesCtrl', function($scope, $state, Bookings, Profile) {
-
-    UserID = Profile.getFacebookId();
-    cardTypes = Bookings.query({},{'UserID': UserID},
-    function(cardArray){
-      for(var i = 0; i < cardArray.length; i++) {
-        $scope.addCard(i);
-      }
-    });
-
-    $scope.items = [];
-    $scope.addCard = function(i) {
-      var newCard = cardTypes[i];
-      $scope.items.push(angular.extend({}, newCard));
-    }
-
     $scope.doRefresh = function() {
+      UserID = Profile.getFacebookId();
+
+      if(UserID===""){
+        $scope.$broadcast('scroll.refreshComplete');
+        return;
+      }
+      cardTypes =Bookings.query({UserID: UserID},
+        function(cardArray){
+          for(var i = 0; i < cardArray.length; i++) {
+            $scope.addCard(i);
+          }
+      });
+      $scope.items = [];
+      $scope.addCard = function(i) {
+        var newCard = cardTypes[i];
+        $scope.items.push(angular.extend({}, newCard));
+      }
 
       $scope.$broadcast('scroll.refreshComplete');
-      $scope.$apply()
     };
+
+
+
 
 
   });
