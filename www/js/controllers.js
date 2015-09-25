@@ -47,7 +47,15 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
     $scope.id = Profile.getFacebookId();
   })
 
-.controller('ExperienceCtrl', function($scope, $state, Experiences, Booking){
+.controller('ExperienceCtrl', function($scope, $state, $ionicLoading,  Experiences, Booking){
+
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
 
     $scope.whenthereareresults=false;
 
@@ -62,6 +70,8 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       var newCard = cardTypes[i];
       $scope.cards.push(angular.extend({}, newCard));
     }
+
+    $ionicLoading.hide();
 
     $scope.cardSwipedLeft = function(index) {
       console.log('Left swipe');
@@ -131,6 +141,14 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       }
 
       $scope.stripeCallback = function (code, result) {
+        $ionicLoading.show({
+          content: 'Loading',
+          animation: 'fade-in',
+          showBackdrop: true,
+          maxWidth: 200,
+          showDelay: 0
+        });
+
         var timestamp=Date.parse($scope.date);
         var datelength=0;
         datelength = $scope.date.length;
@@ -174,18 +192,30 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
           }
         }
         else {
+          $ionicLoading.hide();
           $scope.message = "Date does not look like it was filled in";
         }
-        ;
       }
   }})
 
-.controller('MyExperiencesCtrl', function($scope, $state, Bookings, Profile) {
-    $scope.doRefresh = function() {
+.controller('MyExperiencesCtrl', function($scope, $state, $ionicLoading, Bookings, Profile) {
+
+    console.log("loading my experiences");
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+
       UserID = Profile.getFacebookId();
+      console.log("refreshing");
 
       if(UserID===""){
+        console.log("You need to log in");
         $scope.$broadcast('scroll.refreshComplete');
+        $ionicLoading.hide();
         return;
       }
       cardTypes =Bookings.query({UserID: UserID},
@@ -198,12 +228,9 @@ angular.module('starter.controllers', ['starter.services','ngOpenFB', 'ionic.con
       $scope.addCard = function(i) {
         var newCard = cardTypes[i];
         $scope.items.push(angular.extend({}, newCard));
-      }
-
+      };
+      $ionicLoading.hide();
       $scope.$broadcast('scroll.refreshComplete');
-    };
-
-
 
 
 
